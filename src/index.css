@@ -41,6 +41,27 @@ ol, ul {
 .green {
     background: greenyellow;
 }
+
+.blue {
+    background: aqua;
+}
+
+.red {
+    background: crimson;
+}
+
+.wall {
+    background: #999;
+}
+
+.highlight {
+    border: 4px solid yellow;
+    background: rgba(0, 0, 0, 0);
+    float: left;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
   
 .square:focus {
     outline: none;

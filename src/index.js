@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import * as game from './game-logic.js';
 
 
 function Square(props) {
     let subclass = props.value ? ' '+props.value : '';
+    let highlight = props.highlight ? (<div className="highlight"></div>) : null;
     return (
         <button className={"square"+subclass} onClick={props.onClick}>
-            {}
+            {highlight}
         </button>
     );
 
@@ -16,9 +18,10 @@ function Square(props) {
 class Board extends React.Component {
     renderSquare(i, j) {
         return (<Square
-            key={100 * i + j}
+            key={game.key(i, j)}
             value={this.props.squares[i][j]}
             onClick={() => this.props.onClick(i, j)}
+            highlight={this.props.highlight[0]===i&&this.props.highlight[1]===j}
         />);
     }
 
@@ -38,37 +41,41 @@ class Game extends React.Component {
         this.state = {
             history: [{
                 squares: [
-                    [null, null, null, null, null],
-                    [null, null, null, null, null],
-                    [null, null, null, null, null]
+                    [null, null, 'green', 'wall', 'red'],
+                    ['blue', null, null, 'wall', null],
+                    [null, 'wall', null, 'wall', null],
+                    [null, 'wall', null, 'green', 'blue'],
+                    [null, 'red', null, null, null]
                 ],
             }],
             stepNumber: 0,
-            xNext: true,
+            highlight: [-1, -1],
         }
+        game.load(this.state.history[0].squares);
     }
 
     handleClick(i, j) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
-        const squares = current.squares.map((r) => r.slice());
-        if (squares[i][j]) {
+        const squares = game.handleClick(current.squares, i, j, this.state.highlight);
+        if(!squares){
+            this.setState ({
+                highlight: [i, j],
+            });
             return;
         }
-        squares[i][j] = this.state.xNext ? 'green' : 'green';
         this.setState({
             history: history.concat([{
                 squares: squares,
             }]),
             stepNumber: history.length,
-            xNext: !this.state.xNext,
+            highlight: [-1, -1],
         });
     }
 
     jumpTo(step) {
         this.setState({
             stepNumber: step,
-            xNext: (step % 2) === 0,
         });
     }
 
@@ -87,8 +94,7 @@ class Game extends React.Component {
             );
         });
 
-        let status;
-        status = 'Next player: ' + (this.state.xNext ? 'X' : 'O');
+        let winText = game.checkWin(current.squares) ? 'You Win!' : null;
 
         return (
             <div className="game">
@@ -96,10 +102,11 @@ class Game extends React.Component {
                     <Board
                         squares={current.squares}
                         onClick={(i, j) => this.handleClick(i, j)}
+                        highlight={this.state.highlight}
                     />
                 </div>
                 <div className="game-info">
-                    <div>{status}</div>
+                    <div>{winText}</div>
                     <ol>{moves}</ol>
                 </div>
             </div>
