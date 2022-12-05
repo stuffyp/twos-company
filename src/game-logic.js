@@ -1,6 +1,4 @@
-let board;
-
-export function key(i, j){ return board ? board[i][j] : 100*i+j;}
+export function key(i, j){ return 100*i+j;}
 
 export function handleClick(squares, i, j, highlight){
     if(highlight[0]===-1){
@@ -81,8 +79,4 @@ function path(squares, i1, j1, i2, j2){
     }
     return false;
 
-}
-
-export function load(squares){
-    board = squares.map((r, i) => r.map((c, j) => 100*i+j));
 }

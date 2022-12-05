@@ -84,5 +84,24 @@ ol, ul {
 #intro {
     text-align: center;
 }
+
+.game-container {
+    margin: 20px auto;
+}
+
+.levels-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+button {
+    background-color: pink;
+}
+
+.level-button {
+    margin: 5px;
+}
   
   
