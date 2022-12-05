@@ -24,7 +24,7 @@ ol, ul {
 }
   
 .square {
-    background: aliceblue;
+    background: white;
     border: 1px solid #999;
     float: left;
     font-size: 24px;
@@ -36,6 +36,10 @@ ol, ul {
     padding: 0;
     text-align: center;
     width: 34px;
+}
+
+.green {
+    background: greenyellow;
 }
   
 .square:focus {
