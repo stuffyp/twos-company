@@ -32,6 +32,17 @@ export function handleClick(level, squares, i, j, highlight) {
             old[oj[k][0]][oj[k][1]] = 'orange-door';
         }
     }
+    if(levels.isPinkKey(level, i, j)){
+        const oj = levels.getPink(level);
+        for(let k = 0; k<oj.length; k++){
+            old[oj[k][0]][oj[k][1]] = null;
+        }
+    } else if(levels.isPinkKey(level, highlight[0], highlight[1])){
+        const oj = levels.getPink(level);
+        for(let k = 0; k<oj.length; k++){
+            old[oj[k][0]][oj[k][1]] = 'pink-door';
+        }
+    }
     old[highlight[0]][highlight[1]] = null;
     old[i][j] = squareType;
     return old;
@@ -44,21 +55,8 @@ export function getMoves(level, squares, i, j) {
     let right = [-1, -1];
     let up = [-1, -1];
     let down = [-1, -1];
-    if(levels.isOrangeKey(level, i, j)){
-        const oj = levels.getOrange(level);
-        for(let k = 0; k<oj.length; k++){
-            if(squares[oj[k][0]][oj[k][1]]&&oj[k][0]!==i&&oj[k][1]!==j){
-                return ({
-                    left: left,
-                    right: right,
-                    up: up,
-                    down: down,
-                });
-            }
-        }
-
-    }
-    if (!squares[i][j] || squares[i][j] === 'wall' || squares[i][j]==='orange-door') {
+    
+    if (!squares[i][j] || squares[i][j] === 'wall' || squares[i][j]==='orange-door' || squares[i][j]==='pink-door') {
         return ({
             left: left,
             right: right,
@@ -90,6 +88,58 @@ export function getMoves(level, squares, i, j) {
         }
         left = [i, k];
     }
+
+    if(levels.isOrangeKey(level, i, j)){
+        const oj = levels.getOrange(level);
+        for(let k = 0; k<oj.length; k++){
+            if(squares[oj[k][0]][oj[k][1]]&&(oj[k][0]!==i||oj[k][1]!==j)){
+                return ({
+                    left: [-1, -1],
+                    right: [-1, -1],
+                    up: [-1, -1],
+                    down: [-1, -1],
+                });
+            }
+            if(oj[k][0]===left[0]&&oj[k][1]===left[1]){
+                left = [-1, -1];
+            }
+            if(oj[k][0]===right[0]&&oj[k][1]===right[1]){
+                right = [-1, -1];
+            }
+            if(oj[k][0]===up[0]&&oj[k][1]===up[1]){
+                up = [-1, -1];
+            }
+            if(oj[k][0]===down[0]&&oj[k][1]===down[1]){
+                down = [-1, -1];
+            }
+        }
+    }
+    if(levels.isPinkKey(level, i, j)){
+        const pk = levels.getPink(level);
+        for(let k = 0; k<pk.length; k++){
+            if(squares[pk[k][0]][pk[k][1]]&&(pk[k][0]!==i||pk[k][1]!==j)){
+                return ({
+                    left: [-1, -1],
+                    right: [-1, -1],
+                    up: [-1, -1],
+                    down: [-1, -1],
+                });
+            }
+            if(pk[k][0]===left[0]&&pk[k][1]===left[1]){
+                left = [-1, -1];
+            }
+            if(pk[k][0]===right[0]&&pk[k][1]===right[1]){
+                right = [-1, -1];
+            }
+            if(pk[k][0]===up[0]&&pk[k][1]===up[1]){
+                up = [-1, -1];
+            }
+            if(pk[k][0]===down[0]&&pk[k][1]===down[1]){
+                down = [-1, -1];
+            }
+        }
+    }
+
     return ({
         left: left,
         right: right,
@@ -113,7 +163,7 @@ function hasNeighbors(squares, i, j) {
     let iMax = squares.length - 1;
     let jMax = squares[0].length - 1;
     let value = squares[i][j];
-    if (!value || value === 'wall' || value === 'neut' || value==='orange-door') {
+    if (!value || value === 'wall' || value === 'neut' || value==='orange-door' || value==='pink-door') {
         return true;
     }
     if (i > 0 && value === squares[i - 1][j]) {

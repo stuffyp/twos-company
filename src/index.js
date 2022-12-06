@@ -8,6 +8,7 @@ import * as levels from './levels.js';
 function Square(props) {
     let subclass = props.value ? ' ' + props.value : '';
     let highlight = props.orange ? (<div className="orange-doorframe"></div>) : null;
+    highlight = props.pink ? (<div className="pink-doorframe"></div>) : highlight;
     highlight = props.highlight ? (<div className="highlight"></div>) : highlight;
     return (
         <button className={"square" + subclass} onClick={props.onClick}>
@@ -33,12 +34,21 @@ class Board extends React.Component {
                 orange = true;
             }
         }
+        let pink = false;
+        for (let k = 0; k < this.props.pinkDoorframes.length; k++) {
+            let temp = this.props.pinkDoorframes[k];
+            if (temp[0] === i && temp[1] === j) {
+                pink = true;
+            }
+        }
+        
         return (<Square
             key={game.key(i, j)}
             value={this.props.squares[i][j]}
             onClick={() => this.props.onClick(i, j)}
             highlight={h}
             orange={orange}
+            pink={pink}
         />);
     }
 
@@ -164,6 +174,7 @@ class Game extends React.Component {
                             this.state.upMove,
                         ]}
                         orangeDoorframes={levels.getOrange(this.state.level)}
+                        pinkDoorframes={levels.getPink(this.state.level)}
                     />
                 </div>
                 <div className="game-info">

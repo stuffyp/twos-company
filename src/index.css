@@ -47,7 +47,7 @@ ol, ul {
 }
 
 .red {
-    background: crimson;
+    background: #EE4B2B;
 }
 
 .neut {
@@ -64,6 +64,19 @@ ol, ul {
 
 .orange-doorframe {
     border: 4px solid orange;
+    background: rgba(0, 0, 0, 0);
+    float: left;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.pink-door {
+    background: hotpink;
+}
+
+.pink-doorframe {
+    border: 4px solid hotpink;
     background: rgba(0, 0, 0, 0);
     float: left;
     padding: 0;
