@@ -110,6 +110,11 @@ button {
 }
 
 .completed-button {
+    background-color: yellow;
+    margin: 5px;
+}
+
+.optimal-button {
     background-color: lime;
     margin: 5px;
 }

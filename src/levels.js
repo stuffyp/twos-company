@@ -60,6 +60,8 @@ const levels = [
     ],
 ]
 
+export const bestTimes = [1, 4, 3, 9, 5, 7, 11, 14, 14, 15]
+
 export function getLevel(i){
     return levels[i];
 }

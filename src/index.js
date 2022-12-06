@@ -18,11 +18,18 @@ function Square(props) {
 
 class Board extends React.Component {
     renderSquare(i, j) {
+        let h = false;
+        for (let k = 0; k < 5; k++) {
+            let temp = this.props.highlight[k];
+            if (temp[0] === i && temp[1] === j) {
+                h = true;
+            }
+        }
         return (<Square
             key={game.key(i, j)}
             value={this.props.squares[i][j]}
             onClick={() => this.props.onClick(i, j)}
-            highlight={this.props.highlight[0] === i && this.props.highlight[1] === j}
+            highlight={h}
         />);
     }
 
@@ -46,6 +53,10 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             highlight: [-1, -1],
+            leftMove: [-1, -1],
+            rightMove: [-1, -1],
+            upMove: [-1, -1],
+            downMove: [-1, -1],
             level: props.level,
         }
     }
@@ -59,6 +70,10 @@ class Game extends React.Component {
                 }],
                 stepNumber: 0,
                 highlight: [-1, -1],
+                leftMove: [-1, -1],
+                rightMove: [-1, -1],
+                downMove: [-1, -1],
+                upMove: [-1, -1],
                 level: props.level,
             });
         }
@@ -70,8 +85,13 @@ class Game extends React.Component {
         const current = history[history.length - 1];
         const squares = game.handleClick(current.squares, i, j, this.state.highlight);
         if (!squares) {
+            let moves = game.getMoves(current.squares, i, j);
             this.setState({
                 highlight: [i, j],
+                leftMove: moves.left,
+                rightMove: moves.right,
+                downMove: moves.down,
+                upMove: moves.up,
             });
             return;
         }
@@ -81,7 +101,15 @@ class Game extends React.Component {
             }]),
             stepNumber: history.length,
             highlight: [-1, -1],
+            leftMove: [-1, -1],
+            rightMove: [-1, -1],
+            downMove: [-1, -1],
+            upMove: [-1, -1],
         });
+        let win = game.checkWin(squares);
+        if (win) {
+            this.props.finishLevel(this.state.level, this.state.history.length - 1 <= levels.bestTimes[this.state.level]);
+        }
     }
 
     jumpTo(step) {
@@ -106,9 +134,6 @@ class Game extends React.Component {
         });
 
         let win = game.checkWin(current.squares);
-        if (win){
-            this.props.finishLevel(this.state.level);
-        }
         let winText = win ? 'Level Complete!' : null;
 
         return (
@@ -117,7 +142,13 @@ class Game extends React.Component {
                     <Board
                         squares={current.squares}
                         onClick={(i, j) => this.handleClick(i, j)}
-                        highlight={this.state.highlight}
+                        highlight={[
+                            this.state.highlight,
+                            this.state.leftMove,
+                            this.state.rightMove,
+                            this.state.downMove,
+                            this.state.upMove,
+                        ]}
                     />
                 </div>
                 <div className="game-info">
@@ -134,7 +165,7 @@ class LevelSelect extends React.Component {
         super(props);
         this.state = {
             level: 0,
-            completed: Array(levels.numLevels()).fill(false),
+            completed: Array(levels.numLevels()).fill(0),
         };
     }
 
@@ -144,12 +175,12 @@ class LevelSelect extends React.Component {
         });
     }
 
-    finishLevel(i){
+    finishLevel(i, optimal) {
         let temp = this.state.completed.slice();
-        if (temp[i]){
+        if (temp[i] === 2 || (temp[i] === 1 && !optimal)) {
             return; //stops infinite refresh loop
         }
-        temp[i] = true;
+        temp[i] = optimal ? 2 : 1;
         this.setState({
             completed: temp,
         });
@@ -157,13 +188,16 @@ class LevelSelect extends React.Component {
 
     render() {
         const buttons = Array(levels.numLevels()).fill(0).map((x, i) => {
-            const desc = 'Level ' + (i+1);
-            const classStr = this.state.completed[i] ? 'completed-button' : 'level-button';
+            const desc = 'Level ' + (i + 1);
+            let classStr = this.state.completed[i] ? 'completed-button' : 'level-button';
+            if (this.state.completed[i] === 2) {
+                classStr = 'optimal-button';
+            }
             return (<button key={i} className={classStr} onClick={() => this.setLevel(i)}>{desc}</button>);
         });
         return (<div>
             <div className="levels-container">{buttons}</div>
-            <div className='game-container'><Game level={this.state.level} finishLevel={(i) => this.finishLevel(i)}/></div>
+            <div className='game-container'><Game level={this.state.level} finishLevel={(i, b) => this.finishLevel(i, b)} /></div>
         </div>
         );
     }
