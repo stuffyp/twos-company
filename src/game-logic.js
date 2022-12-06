@@ -8,7 +8,7 @@ export function handleClick(squares, i, j, highlight){
     if(old[i][j] || !old[highlight[0]][highlight[1]]){
         return;
     }
-    if(!path(squares, i, j, highlight[0], highlight[1])){
+    if(!path(squares, highlight[0], highlight[1], i, j)){
         return;
     }
     let squareType = old[highlight[0]][highlight[1]];
@@ -35,7 +35,7 @@ function hasNeighbors(squares, i, j){
     let iMax = squares.length-1;
     let jMax = squares[0].length-1;
     let value = squares[i][j];
-    if(!value||value==='wall'){
+    if(!value||value==='wall'||value==='neut'){
         return true;
     }
     if(i>0&&value===squares[i-1][j]){
@@ -53,29 +53,49 @@ function hasNeighbors(squares, i, j){
 
 function path(squares, i1, j1, i2, j2){
     if (i1===i2) {
-        if (j2<j1){
-            let temp = j2;
-            j2 = j1;
-            j1 = temp;
-        }
-        for(let k = j1+1; k<j2; k++){
-            if (squares[i1][k]){
+        if (j1<j2){
+            for(let k = j1+1; k<j2; k++){
+                if (squares[i1][k]){
+                    return false;
+                }
+            }
+            if(j2+1<squares[0].length&&!squares[i1][j2+1]){
                 return false;
             }
+            return true;
+        } else {
+            for(let k = j1-1; k>j2; k--){
+                if (squares[i1][k]){
+                    return false;
+                }
+            }
+            if(j2>0&&!squares[i1][j2-1]){
+                return false;
+            }
+            return true;
         }
-        return true;
     } else if (j1===j2){
-        if (i2<i1){
-            let temp = i2;
-            i2 = i1;
-            i1 = temp;
-        }
-        for(let k = i1+1; k<i2; k++){
-            if (squares[k][j1]){
+        if (i1<i2){
+            for(let k = i1+1; k<i2; k++){
+                if (squares[k][j1]){
+                    return false;
+                }
+            }
+            if(i2+1<squares.length&&!squares[i2+1][j1]){
                 return false;
             }
+            return true;
+        } else {
+            for(let k = i1-1; k>i2; k--){
+                if (squares[k][j1]){
+                    return false;
+                }
+            }
+            if(i2>0&&!squares[i2-1][j1]){
+                return false;
+            }
+            return true;
         }
-        return true;
     }
     return false;
 

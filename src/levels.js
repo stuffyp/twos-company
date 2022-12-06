@@ -8,9 +8,19 @@ const levels = [
         ['green', 'wall', 'green', null, null],
     ],
     [
+        [null, null, 'blue', 'green'],
+        ['green', null, 'blue', 'wall'],
+    ],
+    [
         ['blue', null, null, null, 'green'],
         [null, 'wall', null, 'wall', null],
         ['green', null, null, null, 'blue'],
+    ],
+    [
+        [null, 'green', 'wall', null, 'green'],
+        [null, 'wall', 'wall', null, null],
+        [null, 'neut', null, null, null],
+        [null, 'wall', 'wall', null, null],
     ],
     [
         [null, null, 'green', 'wall', 'red'],
@@ -25,6 +35,28 @@ const levels = [
         ['blue', 'wall', null, 'wall', null],
         ['wall', 'wall', null, 'wall', 'wall'],
         ['wall', 'red', null, 'red', 'green']
+    ],
+    [
+        ['green', 'blue', null, 'wall', 'wall'],
+        ['red', 'wall', null, 'wall', 'wall'],
+        [null, null, null, null, null],
+        ['wall', 'wall', null, 'wall', 'blue'],
+        ['wall', 'wall', null, 'red', 'green'],
+    ],
+    [
+        [null, null, 'wall', null, 'wall', null, null],
+        [null, null, 'wall', null, 'wall', null, null],
+        ['wall', 'wall', 'wall', null, 'wall', 'wall', 'wall'],
+        ['red', 'green', 'blue', null, 'red', 'green', 'blue'],
+    ],
+    [
+        ['blue', null, 'wall', null, 'blue'],
+        [null, null, 'wall', null, null],
+        [null, 'wall', 'wall', 'wall', null],
+        [null, null, 'neut', null, null],
+        [null, 'wall', 'wall', 'wall', null],
+        [null, null, 'wall', null, null],
+        ['green', null, 'wall', null, 'green'],
     ],
 ]
 

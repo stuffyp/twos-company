@@ -50,6 +50,10 @@ ol, ul {
     background: crimson;
 }
 
+.neut {
+    background: #CCC;
+}
+
 .wall {
     background: #999;
 }
@@ -92,6 +96,7 @@ ol, ul {
 .levels-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     margin: 20px auto;
 }
@@ -101,6 +106,11 @@ button {
 }
 
 .level-button {
+    margin: 5px;
+}
+
+.completed-button {
+    background-color: lime;
     margin: 5px;
 }
   

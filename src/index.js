@@ -105,7 +105,11 @@ class Game extends React.Component {
             );
         });
 
-        let winText = game.checkWin(current.squares) ? 'Level Complete!' : null;
+        let win = game.checkWin(current.squares);
+        if (win){
+            this.props.finishLevel(this.state.level);
+        }
+        let winText = win ? 'Level Complete!' : null;
 
         return (
             <div className="game">
@@ -130,6 +134,7 @@ class LevelSelect extends React.Component {
         super(props);
         this.state = {
             level: 0,
+            completed: Array(levels.numLevels()).fill(false),
         };
     }
 
@@ -139,14 +144,26 @@ class LevelSelect extends React.Component {
         });
     }
 
+    finishLevel(i){
+        let temp = this.state.completed.slice();
+        if (temp[i]){
+            return; //stops infinite refresh loop
+        }
+        temp[i] = true;
+        this.setState({
+            completed: temp,
+        });
+    }
+
     render() {
         const buttons = Array(levels.numLevels()).fill(0).map((x, i) => {
             const desc = 'Level ' + (i+1);
-            return (<button key={i} className='level-button' onClick={() => this.setLevel(i)}>{desc}</button>);
+            const classStr = this.state.completed[i] ? 'completed-button' : 'level-button';
+            return (<button key={i} className={classStr} onClick={() => this.setLevel(i)}>{desc}</button>);
         });
         return (<div>
             <div className="levels-container">{buttons}</div>
-            <div className='game-container'><Game level={this.state.level} /></div>
+            <div className='game-container'><Game level={this.state.level} finishLevel={(i) => this.finishLevel(i)}/></div>
         </div>
         );
     }
