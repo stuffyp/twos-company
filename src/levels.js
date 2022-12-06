@@ -8,6 +8,12 @@ const levels = [
         ['green', 'wall', 'green', null, null],
     ],
     [
+        ['wall', null, null, null, 'wall'],
+        ['wall', null, 'wall', null, 'wall'],
+        ['green', null, null, null, null],
+        ['wall', 'green', 'wall', null, null],
+    ],
+    [
         [null, null, 'blue', 'green'],
         ['green', null, 'blue', 'wall'],
     ],
@@ -58,9 +64,18 @@ const levels = [
         [null, null, 'wall', null, null],
         ['green', null, 'wall', null, 'green'],
     ],
+    [
+        ['blue', null, null, null, 'red', 'green'],
+        ['wall', 'wall', null, 'wall', 'wall', 'wall'],
+        [null, null, null, 'neut', null, 'wall'],
+        ['wall', null, null, null, null, 'wall'],
+        ['wall', null, null, null, null, null],
+        ['wall', 'wall', 'wall', null, 'wall', 'wall'],
+        ['green', 'red', null, null, null, 'blue'],
+    ],
 ]
 
-export const bestTimes = [1, 4, 3, 9, 5, 7, 11, 14, 14, 15]
+export const bestTimes = [1, 4, 5, 3, 9, 5, 7, 11, 14, 14, 11, 22]
 
 export function getLevel(i){
     return levels[i];

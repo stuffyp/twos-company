@@ -108,13 +108,18 @@ class Game extends React.Component {
         });
         let win = game.checkWin(squares);
         if (win) {
-            this.props.finishLevel(this.state.level, this.state.history.length - 1 <= levels.bestTimes[this.state.level]);
+            this.props.finishLevel(this.state.level, history.length <= levels.bestTimes[this.state.level]);
         }
     }
 
     jumpTo(step) {
         this.setState({
             stepNumber: step,
+            highlight: [-1, -1],
+            leftMove: [-1, -1],
+            rightMove: [-1, -1],
+            downMove: [-1, -1],
+            upMove: [-1, -1],
         });
     }
 
@@ -124,8 +129,8 @@ class Game extends React.Component {
 
         const moves = history.map((step, move) => {
             const desc = move ?
-                'Go to move #' + move :
-                'Go to game start';
+                'Move #' + move :
+                'Restart Level';
             return (
                 <li key={move}>
                     <button onClick={() => this.jumpTo(move)}>{desc}</button>
