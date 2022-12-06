@@ -58,6 +58,19 @@ ol, ul {
     background: #999;
 }
 
+.orange-door {
+    background: orange;
+}
+
+.orange-doorframe {
+    border: 4px solid orange;
+    background: rgba(0, 0, 0, 0);
+    float: left;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
 .highlight {
     border: 4px solid yellow;
     background: rgba(0, 0, 0, 0);

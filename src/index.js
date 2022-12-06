@@ -7,7 +7,8 @@ import * as levels from './levels.js';
 
 function Square(props) {
     let subclass = props.value ? ' ' + props.value : '';
-    let highlight = props.highlight ? (<div className="highlight"></div>) : null;
+    let highlight = props.orange ? (<div className="orange-doorframe"></div>) : null;
+    highlight = props.highlight ? (<div className="highlight"></div>) : highlight;
     return (
         <button className={"square" + subclass} onClick={props.onClick}>
             {highlight}
@@ -25,11 +26,19 @@ class Board extends React.Component {
                 h = true;
             }
         }
+        let orange = false;
+        for (let k = 0; k < this.props.orangeDoorframes.length; k++) {
+            let temp = this.props.orangeDoorframes[k];
+            if (temp[0] === i && temp[1] === j) {
+                orange = true;
+            }
+        }
         return (<Square
             key={game.key(i, j)}
             value={this.props.squares[i][j]}
             onClick={() => this.props.onClick(i, j)}
             highlight={h}
+            orange={orange}
         />);
     }
 
@@ -83,9 +92,9 @@ class Game extends React.Component {
     handleClick(i, j) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
-        const squares = game.handleClick(current.squares, i, j, this.state.highlight);
+        const squares = game.handleClick(this.state.level, current.squares, i, j, this.state.highlight);
         if (!squares) {
-            let moves = game.getMoves(current.squares, i, j);
+            let moves = game.getMoves(this.state.level, current.squares, i, j);
             this.setState({
                 highlight: [i, j],
                 leftMove: moves.left,
@@ -154,6 +163,7 @@ class Game extends React.Component {
                             this.state.downMove,
                             this.state.upMove,
                         ]}
+                        orangeDoorframes={levels.getOrange(this.state.level)}
                     />
                 </div>
                 <div className="game-info">
