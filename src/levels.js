@@ -148,6 +148,44 @@ const levels = [
         [null, null, 'orange-door', null, 'pink-door', 'pink-door'],
         ['pink-key', null, 'orange-door', null, 'pink-door', 'green'],
     ],
+    [
+        [null, 'wall', 'green', null, 'pink-door', null, null, null, null],
+        [null, 'wall', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'pink-door'],
+        [null, 'wall', null, null, null, null, null, null, null],
+        [null, null, null, null, null, 'orange-key', null, null, null],
+        [null, 'wall', null, null, null, null, null, null, null],
+        [null, 'wall', null, null, null, null, null, 'orange-door', 'orange-door'],
+        ['pink-key', 'wall', 'blue', null, null, 'blue', null, 'orange-door', 'green'],
+    ],
+    [
+        ['red', 'green', 'blue', 'wall', 'red', 'green', 'blue'],
+        [null, null, null, 'wall', null, null, null],
+        ['wall', 'orange-door', 'wall', 'wall', 'wall', 'pink-door', 'wall'],
+        [null, null, 'neut', null, 'neut', null, null],
+        ['wall', null, 'wall', 'wall', 'wall', null, 'wall'],
+        [null, null, null, 'wall', null, null, null],
+        [null, 'pink-key', null, 'wall', null, 'orange-key', null],
+    ],
+    [
+        ['wall', 'wall', 'wall', null, 'wall', null, null],
+        [null, null, 'wall', null, 'orange-door', 'orange-door', 'orange-door'],
+        [null, null, 'orange-door', null, null, 'pink-door', null],
+        ['green', null, 'wall', null, null, 'pink-door', 'blue'],
+        ['wall', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', null, null, 'wall', 'wall'],
+        ['orange-key', null, 'green', 'pink-key', 'orange-door', null, 'blue'],
+        ['wall', 'wall', 'wall', null, 'orange-door', null, null],
+        ['wall', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall'],
+    ],
+    [
+        ['blue', null, null, 'pink-door', null],
+        [null, 'orange-key', null, 'pink-door', 'neut'],
+        [null, null, null, 'pink-door', null],
+        ['pink-door', 'pink-door', 'pink-door', 'pink-door', 'green'],
+        [null, null, null, 'pink-door', null],
+        ['wall', 'orange-door', 'wall', 'wall', 'wall'],
+        [null, 'pink-key', null, 'green', 'blue'],
+    ],
 ]
 
 export const bestTimes = [
@@ -155,7 +193,7 @@ export const bestTimes = [
     5, 7, 11, 14, 14,
     10, 22, 17, 17, 9,
     9, 11, 13, 19, 21,
-    10,
+    10, 30, 21, 23, 16,
 ]
 
 export function getLevel(i){
