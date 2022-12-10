@@ -105,8 +105,9 @@ class Game extends React.Component {
         const squares = game.handleClick(this.state.level, current.squares, i, j, this.state.highlight);
         if (!squares) {
             let moves = game.getMoves(this.state.level, current.squares, i, j);
+            const highlight = current.squares[i][j]==='wall' ? [-1, -1] : [i, j];
             this.setState({
-                highlight: [i, j],
+                highlight: highlight,
                 leftMove: moves.left,
                 rightMove: moves.right,
                 downMove: moves.down,
@@ -179,7 +180,7 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{winText}</div>
-                    <ol>{moves}</ol>
+                    <ol start='0'>{moves}</ol>
                 </div>
             </div>
         );
