@@ -5,13 +5,25 @@ import * as game from './game-logic.js';
 import * as levels from './levels.js';
 
 
+var mouseDown = 0;
+document.body.onmousedown = function() { 
+  if(!mouseDown){
+    ++mouseDown;
+  }
+}
+document.body.onmouseup = function() {
+  if(mouseDown){
+    --mouseDown;
+  }
+}
+
 function Square(props) {
     let subclass = props.value ? ' ' + props.value : '';
     let highlight = props.orange ? (<div className="orange-doorframe"></div>) : null;
     highlight = props.pink ? (<div className="pink-doorframe"></div>) : highlight;
     highlight = props.highlight ? (<div className="highlight"></div>) : highlight;
     return (
-        <button className={"square" + subclass} onClick={props.onClick}>
+        <button className={"square" + subclass} onMouseDown={props.onClick} onMouseOver={props.onDrag}>
             {highlight}
         </button>
     );
@@ -46,6 +58,7 @@ class Board extends React.Component {
             key={game.key(i, j)}
             value={this.props.squares[i][j]}
             onClick={() => this.props.onClick(i, j)}
+            onDrag={()=> this.props.onDrag(i, j)}
             highlight={h}
             orange={orange}
             pink={pink}
@@ -161,12 +174,16 @@ class Game extends React.Component {
         let win = game.checkWin(current.squares);
         let winText = win ? 'Level Complete!' : null;
 
+        const editButton = this.state.level===-1 ? <button onClick={() => this.props.edit()}>{'Edit'}</button> : null;
+        const editText = this.state.level===-1 ? <div>Level Editor</div> : null;
+
         return (
             <div className="game">
                 <div className="game-board">
                     <Board
                         squares={current.squares}
                         onClick={(i, j) => this.handleClick(i, j)}
+                        onDrag={()=>{}}
                         highlight={[
                             this.state.highlight,
                             this.state.leftMove,
@@ -179,8 +196,123 @@ class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
-                    <div>{winText}</div>
+                    {editText}
+                    <div id='editor-play'>{editButton}</div>
+                    <div id='win-text'>{winText}</div>
+                    <div>Move History</div>
                     <ol start='0'>{moves}</ol>
+                </div>
+            </div>
+        );
+    }
+}
+
+class Editor extends React.Component {
+    constructor(props) {
+        super(props);
+        const level = levels.getLevel(-1).map((r) => r.slice());
+        this.state = {
+            squares: level,
+            highlight: [-1, -1],
+            select: 0,
+        }
+    }
+
+    static get paletteValues(){
+        return [null, 'wall', 'green', 'blue', 'red', 'neut', 'orange-door', 'orange-key', 'pink-door', 'pink-key'];
+    }
+
+    onDrag(i, j){
+        if(mouseDown){
+            if(levels.writeSquare(i, j, this.constructor.paletteValues[this.state.select])){
+                const level = levels.getLevel(-1).map((r) => r.slice());
+                const h = this.state.select===7||this.state.select===9 ? [-1, -1] : [i, j];
+                this.setState({
+                    highlight: h,
+                    squares: level,
+                });
+                this.props.updateLevelCode();
+            }
+        }
+    }
+
+    handleClick(i, j) {
+        if(levels.writeSquare(i, j, this.constructor.paletteValues[this.state.select])){
+            const level = levels.getLevel(-1).map((r) => r.slice());
+            const h = this.state.select===7||this.state.select===9 ? [-1, -1] : [i, j];
+            this.setState({
+                highlight: h,
+                squares: level,
+            });
+            this.props.updateLevelCode();
+        } else {
+            this.setState({
+                highlight: [i, j],
+            });
+        }
+    }
+
+    selectClick(i){
+        this.setState({
+            select: i,
+        });
+    }
+
+    loadLevel(){
+        let inputLevelCode = prompt('Enter a level code:');
+        if(!inputLevelCode){
+            return;
+        }
+        try{
+            levels.loadCode(inputLevelCode);
+        } catch (e) {
+            alert('Something went wrong. Make sure that your level code is valid.');
+            return;
+        }
+        this.props.updateLevelCode();
+        this.setState({
+            squares : levels.getLevel(-1).map((r) => r.slice()),
+        });
+    }
+
+    render() {
+        const palette = this.constructor.paletteValues.map((val, i) => (<Square
+            key={i}
+            value={val}
+            onClick={() => this.selectClick(i)}
+            onDrag={()=>{}}
+            highlight={this.state.select===i}
+            pink={val==='pink-door'||val==='pink-key'}
+            orange={val==='orange-door'||val==='orange-key'}
+        />));
+        const validLevel = levels.customLevelValid() ? null : <div id='invalid-text'>Invalid Level</div>;
+        const playButton = levels.customLevelValid() ? 
+            <div id='editor-play'><button onClick={() => this.props.play()}>{'Play'}</button></div> : null;
+        const loadButton = <div id='editor-load'><button onClick={() => this.loadLevel()}>Load</button></div>;
+        return (
+            <div className="game">
+                <div className="game-board">
+                    <Board
+                        squares={this.state.squares}
+                        onClick={(i, j) => this.handleClick(i, j)}
+                        onDrag={(i, j) => this.onDrag(i, j)}
+                        highlight={[
+                            this.state.highlight,
+                            [-1, -1],
+                            [-1, -1],
+                            [-1, -1],
+                            [-1, -1],
+                        ]}
+                        orangeDoorframes={levels.getOrange(-1)}
+                        pinkDoorframes={levels.getPink(-1)}
+                    />
+                </div>
+                <div className="game-info">
+                    <div>{'Level Editor'}</div>
+                    {validLevel}
+                    {playButton}
+                    {loadButton}
+                    <div id='palette'>{palette}</div>
                 </div>
             </div>
         );
@@ -193,13 +325,39 @@ class LevelSelect extends React.Component {
         this.state = {
             level: 0,
             completed: Array(levels.numLevels()).fill(0),
+            play: false,
+            levelCode : levels.levelCode(0),
         };
     }
 
+    updateLevelCode() {
+        this.setState({
+            levelCode : levels.levelCode(this.state.level),
+        });
+    }
+
     setLevel(i) {
+        if(i===-1){
+            this.setState({
+                play: false,
+            });
+        }
         this.setState({
             level: i,
+            levelCode : levels.levelCode(i),
         });
+    }
+
+    playCustom() {
+        this.setState({
+            play: true,
+        });
+    }
+
+    editCustom() {
+        this.setState({
+            play: false,
+        })
     }
 
     finishLevel(i, optimal) {
@@ -222,9 +380,19 @@ class LevelSelect extends React.Component {
             }
             return (<button key={i} className={classStr} onClick={() => this.setLevel(i)}>{desc}</button>);
         });
+        const gameVal = this.state.level===-1&&!this.state.play ? <Editor play={()=>this.playCustom()} updateLevelCode={()=>this.updateLevelCode()}/> : 
+            <Game level={this.state.level} finishLevel={(i, b) => this.finishLevel(i, b)} edit={()=>this.editCustom()}/>;
+
         return (<div>
-            <div className="levels-container">{buttons}</div>
-            <div className='game-container'><Game level={this.state.level} finishLevel={(i, b) => this.finishLevel(i, b)} /></div>
+            <div className="levels-container">
+                {buttons}
+                <button className='level-button' onClick={() => this.setLevel(-1)}>{'Level Editor'}</button>
+            </div>
+            <form className="level-code-container">
+                <label htmlFor='level-code-text'>Level Code:</label>
+                <div id='level-code-text'>{this.state.levelCode}</div>
+            </form>
+            <div className='game-container'>{gameVal}</div>
         </div>
         );
     }

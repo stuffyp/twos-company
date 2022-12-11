@@ -1,3 +1,5 @@
+import { checkWin } from "./game-logic";
+
 const levels = [
     [
         ['green', null, null, 'green'],
@@ -118,6 +120,15 @@ const levels = [
         ['green', 'neut', 'red', 'neut', 'blue'],
     ],
     [
+        ['wall', 'wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', 'blue', null, 'red', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'green', 'wall', 'wall', null, 'wall', 'wall', 'green', 'wall'],
+        [null, null, null, null, null, null, null, null, null],
+        ['wall', 'red', 'wall', null, 'wall', null, 'wall', 'blue', 'wall'],
+        ['wall', 'wall', 'wall', null, 'neut', null, 'wall', 'wall', 'wall'],
+    ],
+    [
         ['wall', 'blue', 'wall', 'red', 'wall', 'green', 'wall'],
         ['wall', null, 'wall', null, 'wall', null, 'wall'],
         [null, null, 'neut', null, 'neut', null, null],
@@ -233,7 +244,7 @@ const levels = [
     ],
     [
         ['wall', 'wall', 'wall', 'wall', null, null, 'wall', 'wall', 'wall', 'wall'],
-        [null, 'orange-door', null,  'orange-door', null, null, 'orange-door', null, 'orange-door', null],
+        [null, 'orange-door', null, 'orange-door', null, null, 'orange-door', null, 'orange-door', null],
         [null, 'pink-door', null, 'orange-door', null, null, 'orange-door', null, 'pink-door', null],
         [null, 'pink-door', null, 'pink-door', null, null, 'pink-door', null, 'pink-door', null],
         ['pink-door', 'wall', 'wall', 'wall', null, null, 'wall', 'wall', 'wall', 'pink-door'],
@@ -276,27 +287,63 @@ const levels = [
         [null, 'wall', null, 'wall', null, 'wall', null],
         ['red', 'wall', 'green', 'wall', 'green', 'wall', 'blue']
     ],
+    [
+        [null, null, null, null, 'wall', 'blue', null, 'green'],
+        [null, 'wall', 'wall', null, 'wall', null, null, null],
+        [null, 'wall', 'wall', null, 'pink-key', null, 'pink-door', 'pink-door'],
+        [null, 'wall', 'wall', null, 'wall', 'red', 'pink-door', null],
+        [null, null, 'orange-door', null, 'pink-door', 'pink-door', 'pink-door', 'wall'],
+        ['wall', 'wall', 'pink-door', 'wall', 'wall', 'wall', 'pink-door', 'wall'],
+        ['wall', 'pink-door', 'pink-door', 'pink-door', 'red', 'wall', null, 'wall'],
+        ['orange-door', 'pink-door', null, null, 'pink-door', 'orange-door', null, 'orange-key'],
+        ['wall', 'pink-door', null, null, 'pink-door', 'wall', null, 'wall'],
+        ['wall', 'green', 'pink-door', 'pink-door', 'blue', 'wall', 'wall', 'wall'],
+    ],
+]
+
+let custom = [
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
 ]
 
 export const bestTimes = [
     1, 4, 5, 5, 3,
     9, 5, 7, 10, 10,
     14, 14, 10, 22, 22,
-    28, 16, 28, 19, 9,
-    9, 11, 19, 22, 36,
-    21, 10, 29, 21, 23,
-    15, 11, 41, 21, 34,
-    46, 100, 100, 100, 100
+    28, 16, 28, 25, 19,
+    9, 9, 11, 19, 22,
+    36, 21, 10, 29, 21,
+    23, 15, 11, 41, 21,
+    34, 46, 43, 100, 100,
+    100
 ]
 
-export function getLevel(i){
-    let l = levels[i].map((r) => r.slice());
-    for(let j = 0; j<l.length; j++){
-        for(let k = 0; k<l[0].length; k++){
-            if(l[j][k]==='orange-key'){
+export function getLevel(i) {
+    let l;
+    if (i === -1) {
+        l = custom.map((r) => r.slice());
+    } else {
+        l = levels[i].map((r) => r.slice());
+    }
+    for (let j = 0; j < l.length; j++) {
+        for (let k = 0; k < l[0].length; k++) {
+            if (l[j][k] === 'orange-key') {
                 l[j][k] = null;
             }
-            if(l[j][k]==='pink-key'){
+            if (l[j][k] === 'pink-key') {
                 l[j][k] = null;
             }
         }
@@ -304,16 +351,16 @@ export function getLevel(i){
     return l;
 }
 
-export function numLevels(){
+export function numLevels() {
     return levels.length;
 }
 
-export function getOrange(i){
-    const l = levels[i];
+export function getOrange(i) {
+    const l = i === -1 ? custom : levels[i];
     let ans = []
-    for(let i = 0; i<l.length; i++){
-        for(let j = 0; j<l[0].length; j++){
-            if(l[i][j]==='orange-door'||l[i][j]==='orange-key'){
+    for (let i = 0; i < l.length; i++) {
+        for (let j = 0; j < l[0].length; j++) {
+            if (l[i][j] === 'orange-door' || l[i][j] === 'orange-key') {
                 ans.push([i, j]);
             }
         }
@@ -321,16 +368,17 @@ export function getOrange(i){
     return ans;
 }
 
-export function isOrangeKey(l, i, j){
-    return levels[l][i][j]==='orange-key';
+export function isOrangeKey(l, i, j) {
+    const lv = l === -1 ? custom : levels[l];
+    return lv[i][j] === 'orange-key';
 }
 
-export function getPink(i){
-    const l = levels[i];
+export function getPink(i) {
+    const l = i === -1 ? custom : levels[i];
     let ans = []
-    for(let i = 0; i<l.length; i++){
-        for(let j = 0; j<l[0].length; j++){
-            if(l[i][j]==='pink-door'||l[i][j]==='pink-key'){
+    for (let i = 0; i < l.length; i++) {
+        for (let j = 0; j < l[0].length; j++) {
+            if (l[i][j] === 'pink-door' || l[i][j] === 'pink-key') {
                 ans.push([i, j]);
             }
         }
@@ -338,6 +386,188 @@ export function getPink(i){
     return ans;
 }
 
-export function isPinkKey(l, i, j){
-    return levels[l][i][j]==='pink-key';
+export function isPinkKey(l, i, j) {
+    const lv = l === -1 ? custom : levels[l];
+    return lv[i][j] === 'pink-key';
+}
+
+export function writeSquare(i, j, val) {
+    const ret = custom[i][j] !== val;
+    custom[i][j] = val;
+    return ret;
+}
+
+export function customLevelValid() {
+    let greenCount = 0;
+    let blueCount = 0;
+    let redCount = 0;
+    let orangeKeyCount = 0;
+    let pinkKeyCount = 0;
+    for (let i = 0; i < custom.length; i++) {
+        for (let j = 0; j < custom[i].length; j++) {
+            const value = custom[i][j];
+            if (value === 'green') {
+                greenCount += 1;
+            } else if (value === 'blue') {
+                blueCount += 1;
+            } else if (value === 'red') {
+                redCount += 1;
+            } else if (value === 'orange-key') {
+                orangeKeyCount += 1;
+            } else if (value === 'pink-key') {
+                pinkKeyCount += 1;
+            }
+        }
+    }
+    if (redCount + greenCount + blueCount === 0) {
+        return false;
+    }
+    if (redCount === 1) {
+        return false;
+    }
+    if (greenCount === 1) {
+        return false;
+    }
+    if (blueCount === 1) {
+        return false;
+    }
+    if (pinkKeyCount > 1 || orangeKeyCount > 1) {
+        return false;
+    }
+    return !checkWin(custom);
+}
+
+export function loadCode(str){
+    const strMap = {
+        'e': null,
+        'w': 'wall',
+        'g': 'green',
+        'b': 'blue',
+        'r': 'red',
+        'n': 'neut',
+        'o': 'orange-door',
+        'p': 'pink-door',
+        'k': 'orange-key',
+        'q': 'pink-key',
+    }
+
+    if(!/^[ewgbrnopkqEWGBRNOPKQ0-9]+$/.test(str)){
+        console.log(str);
+        throw new Error('invalid level code :(');
+    }
+
+    let temp = custom.slice();
+    if(!/\d/.test(str.charAt(0))){
+        console.log(str);
+        throw new Error('invalid level code :(');
+    }
+    let j = parseInt(str.charAt(0));
+    if (j===0){
+        j = 10;
+    }
+    let idxStart = 1;
+    let idxEnd = 1;
+    while(/\d/.test(str.charAt(idxEnd))){
+        idxEnd++;
+    }
+    let i = parseInt(str.substring(idxStart, idxEnd));
+    if(i<1||i>15){
+        console.log(str);
+        throw new Error('invalid level code :(');
+    }
+
+    for(let i1 = 0; i1<custom.length; i1++){
+        for(let j1 = 0; j1<custom[0].length; j1++){
+            if(i1<i&&j1<j){
+                temp[i1][j1] = null;
+            } else {
+                temp[i1][j1] = 'wall';
+            }
+        }
+    }
+
+    let i1 = 0;
+    let j1 = 0;
+    while(idxStart < str.length){
+        idxStart = idxEnd;
+        const c = str.charAt(idxStart);
+        const val = strMap[c.toLowerCase()];
+        let num;
+        if(/[A-Z]/.test(c)){
+            num = 2;
+            idxEnd++;
+        } else if(idxStart===str.length-1||/[a-zA-Z]/.test(str.charAt(idxStart+1))){
+            num = 1;
+            idxEnd++;
+        } else {
+            idxStart++;
+            idxEnd++;
+            while(idxEnd < str.length && /\d/.test(str.charAt(idxEnd))){
+                idxEnd++;
+            }
+            num = parseInt(str.substring(idxStart, idxEnd));
+        }
+        for(let k=0; k<num; k++){
+            temp[i1][j1] = val;
+            j1++;
+            if(j1===j){
+                j1 = 0;
+                i1++;
+            }
+        }
+    }
+    custom = temp;
+}
+
+//format: maps square type to letter, followed by number of repetitions
+//if once, then number omitted, if twice, then number ommited and letter capitalized
+//first 2-3 numbers represent dimension
+//[last digit of horizontal dimension][digits of vertical dimension]
+export function levelCode(k) {
+    const l = k === -1 ? custom : levels[k];
+
+    let curr = -1;
+    let count = 0;
+    let ans = String(l[0].length % 10) + String(l.length);
+
+    const strMap = {
+        'wall': 'w',
+        'green': 'g',
+        'blue': 'b',
+        'red': 'r',
+        'neut': 'n',
+        'orange-door': 'o',
+        'pink-door': 'p',
+        'orange-key': 'k',
+        'pink-key': 'q',
+    }
+    curr = l[0][0];
+    for (let i = 0; i < l.length; i++) {
+        for (let j = 0; j < l[i].length; j++) {
+            if (l[i][j] !== curr) {
+                let temp = curr === null ? 'e' : strMap[curr];
+                if (count === 1) {
+                    ans += temp;
+                } else if (count === 2) {
+                    ans += temp.toUpperCase();
+                } else {
+                    ans += temp;
+                    ans += String(count);
+                }
+                count = 0;
+                curr = l[i][j];
+            }
+            count += 1;
+        }
+    }
+    let temp = curr === null ? 'e' : strMap[curr];
+    if (count === 1) {
+        ans += temp;
+    } else if (count === 2) {
+        ans += temp.toUpperCase();
+    } else {
+        ans += temp;
+        ans += String(count);
+    }
+    return ans;
 }

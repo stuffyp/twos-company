@@ -13,6 +13,51 @@ body > div {
 ol, ul {
     padding-left: 30px;
 }
+
+ul {
+    list-style: none;
+}
+
+#editor-play {
+    margin: 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+
+#editor-play > button {
+    background-color: cyan;
+}
+
+#editor-load {
+    margin: 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+
+#editor-load > button {
+    background-color: cyan;
+}
+
+#palette {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#palette > button {
+    margin: 5px;
+}
+
+#win-text {
+    color: #3BB143;
+}
+
+#invalid-text {
+    color: red;
+}
   
 .board-row:after {
     clear: both;
@@ -147,6 +192,20 @@ ol, ul {
     background-color: aliceblue;
     border-radius: 10px;
     padding: 10px;
+}
+
+.level-code-container {
+    margin: 20px auto;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-wrap: break-word;
+}
+
+#level-code-text {
+    background-color: aliceblue;
+    border: none;
+    overflow: visible;
 }
 
 button {
