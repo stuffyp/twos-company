@@ -299,6 +299,20 @@ const levels = [
         ['wall', 'pink-door', null, null, 'pink-door', 'wall', null, 'wall'],
         ['wall', 'green', 'pink-door', 'pink-door', 'blue', 'wall', 'wall', 'wall'],
     ],
+    [
+        ['orange-door', 'orange-door', 'orange-door', 'wall', 'wall', 'green', null, null, 'wall', 'wall'],
+        [null, 'wall', 'orange-door', 'wall', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall'],
+        ['blue', 'wall', 'orange-door', 'orange-door', 'wall', 'wall', 'pink-door', 'wall', null, 'wall'],
+        ['orange-door', null, 'orange-door', null, null, null, null, null, null, null],
+        ['red', 'wall', 'orange-door', 'wall', null, 'wall', 'orange-door', 'wall', 'orange-door', 'wall'],
+        ['wall', 'wall', 'orange-door', 'orange-door', null, null, 'orange-door', null, null, null],
+        ['wall', 'wall', 'orange-door', 'wall', null, 'orange-door', 'orange-door', 'orange-door', null, 'wall'],
+        ['orange-key', 'green', 'orange-door', 'pink-door', null, 'orange-door', 'pink-key', 'orange-door', null, 'wall'],
+        ['wall', 'wall', 'wall', 'wall', null, 'orange-door', 'orange-door', 'orange-door', null, 'wall'],
+        ['wall', 'wall', 'wall', 'wall', null, null, null, null, null, 'wall'],
+        ['wall', 'wall', 'wall', null, 'red', null, null, null, 'blue', null],
+        ['wall', 'wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', null, 'wall']
+    ],
 ]
 
 let custom = [
@@ -327,9 +341,53 @@ export const bestTimes = [
     9, 9, 11, 19, 22,
     36, 21, 10, 29, 21,
     23, 15, 11, 41, 21,
-    34, 46, 43, 100, 100,
-    100
+    34, 46, 43, 56,
 ]
+
+export const eloValues = [
+    800, 800, 850, 900, 950,
+    1000, 1000, 1050, 1100, 1100,
+    1200, 1200, 1250, 1250, 1300,
+    1400, 1350, 1400, 1500, 1500,
+    1000, 1100, 1300, 1400, 1450,
+    1500, 1600, 1150, 1500, 1400,
+    1650, 1500, 1500, 1700, 1700,
+    1800, 1650, 1900, 1900,
+]
+
+//console.log(performance(bestTimes)); //max elo
+
+export function performance(completedVals){
+    let total = 0;
+
+    let maxSolvedElo = 0;
+    for(let i = 0; i<completedVals.length; i++){
+        if(completedVals[i]){
+            maxSolvedElo = Math.max(maxSolvedElo, eloValues[i]);
+        }
+    }
+
+    let baseline = 400 + Math.floor(maxSolvedElo*0.15);
+    let weightSum = 0;
+
+    for(let i = 0; i<completedVals.length; i++){
+        const weight = eloValues[i]/100;
+        weightSum += weight;
+        if(completedVals[i]===0){
+            total += 0;
+            continue;
+        }
+        let ratio = completedVals[i]/bestTimes[i];
+        if(ratio < 1){
+            ratio = 1;
+        } else if (ratio > 2){
+            ratio = 2;
+        }
+        const efficiency = (3-ratio)/2;
+        total += (eloValues[i]-baseline)*efficiency*weight;
+    }
+    return baseline+Math.floor(total/weightSum);
+}
 
 export function getLevel(i) {
     let l;
@@ -452,13 +510,11 @@ export function loadCode(str){
     }
 
     if(!/^[ewgbrnopkqEWGBRNOPKQ0-9]+$/.test(str)){
-        console.log(str);
         throw new Error('invalid level code :(');
     }
 
     let temp = custom.slice();
     if(!/\d/.test(str.charAt(0))){
-        console.log(str);
         throw new Error('invalid level code :(');
     }
     let j = parseInt(str.charAt(0));
@@ -472,7 +528,6 @@ export function loadCode(str){
     }
     let i = parseInt(str.substring(idxStart, idxEnd));
     if(i<1||i>15){
-        console.log(str);
         throw new Error('invalid level code :(');
     }
 

@@ -141,7 +141,7 @@ class Game extends React.Component {
         });
         let win = game.checkWin(squares);
         if (win) {
-            this.props.finishLevel(this.state.level, history.length <= levels.bestTimes[this.state.level]);
+            this.props.finishLevel(this.state.level, history.length);
         }
     }
 
@@ -324,6 +324,7 @@ class LevelSelect extends React.Component {
         super(props);
         this.state = {
             level: 0,
+            elo: 500,
             completed: Array(levels.numLevels()).fill(0),
             play: false,
             levelCode : levels.levelCode(0),
@@ -360,14 +361,19 @@ class LevelSelect extends React.Component {
         })
     }
 
-    finishLevel(i, optimal) {
+    finishLevel(i, moveNum) {
+        if(i===-1){
+            return;
+        }
         let temp = this.state.completed.slice();
-        if (temp[i] === 2 || (temp[i] === 1 && !optimal)) {
+        if (temp[i]<=moveNum&&temp[i]>0) {
             return; //stops infinite refresh loop
         }
-        temp[i] = optimal ? 2 : 1;
+        temp[i] = moveNum;
+        const newElo = levels.performance(temp);
         this.setState({
             completed: temp,
+            elo: newElo,
         });
     }
 
@@ -375,23 +381,28 @@ class LevelSelect extends React.Component {
         const buttons = Array(levels.numLevels()).fill(0).map((x, i) => {
             const desc = 'Level ' + (i + 1);
             let classStr = this.state.completed[i] ? 'completed-button' : 'level-button';
-            if (this.state.completed[i] === 2) {
+            if (this.state.completed[i] === levels.bestTimes[i]) {
                 classStr = 'optimal-button';
             }
             return (<button key={i} className={classStr} onClick={() => this.setLevel(i)}>{desc}</button>);
         });
         const gameVal = this.state.level===-1&&!this.state.play ? <Editor play={()=>this.playCustom()} updateLevelCode={()=>this.updateLevelCode()}/> : 
-            <Game level={this.state.level} finishLevel={(i, b) => this.finishLevel(i, b)} edit={()=>this.editCustom()}/>;
+            <Game level={this.state.level} finishLevel={(i, moveNum) => this.finishLevel(i, moveNum)} edit={()=>this.editCustom()}/>;
+        const levelElo = this.state.level===-1 ? '???' : levels.eloValues[this.state.level];
 
         return (<div>
             <div className="levels-container">
                 {buttons}
                 <button className='level-button' onClick={() => this.setLevel(-1)}>{'Level Editor'}</button>
             </div>
-            <form className="level-code-container">
+            <div className='elo-container'>
+                <div>{'ELO: '+ this.state.elo}</div>
+                <div id='level-elo'>{'Level Difficulty: '+ levelElo}</div>
+            </div>
+            <div className="level-code-container">
                 <label htmlFor='level-code-text'>Level Code:</label>
                 <div id='level-code-text'>{this.state.levelCode}</div>
-            </form>
+            </div>
             <div className='game-container'>{gameVal}</div>
         </div>
         );

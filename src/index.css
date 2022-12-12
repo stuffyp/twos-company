@@ -194,6 +194,23 @@ ul {
     padding: 10px;
 }
 
+.elo-container{
+    display: flex;
+}
+
+.elo-container > div {
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 150px;
+    margin-right: auto;
+}
+
+#level-elo {
+    margin-right: 5px;
+    margin-left: auto;
+}
+
 .level-code-container {
     margin: 20px auto;
     background-color: aliceblue;
@@ -224,6 +241,10 @@ button {
 .optimal-button {
     background-color: lime;
     margin: 5px;
+}
+
+#bottom-padding {
+    height: 50px
 }
   
   
