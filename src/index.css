@@ -1,13 +1,30 @@
 body {
     font: 14px "Century Gothic", Futura, sans-serif;
     margin: auto;
-    max-width: 720px;
+    max-width: 740px;
     background-color: var(--sky-color);
     --sky-color: #B7E2F3;
 }
 
 body > div {
     margin: 20px auto;
+}
+
+.container {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+@media only screen and (max-width: 740px){ 
+    #root {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 741px){
+    #screen-size-message {
+        display: none;
+    }
 }
   
 ol, ul {
