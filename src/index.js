@@ -117,7 +117,7 @@ class Game extends React.Component {
         const current = history[history.length - 1];
         const squares = game.handleClick(this.state.level, current.squares, i, j, this.state.highlight);
         if (!squares) {
-            let moves = game.getMoves(this.state.level, current.squares, i, j);
+            const moves = game.getMoves(this.state.level, current.squares, i, j);
             const highlight = current.squares[i][j]==='wall' ? [-1, -1] : [i, j];
             this.setState({
                 highlight: highlight,
@@ -145,6 +145,19 @@ class Game extends React.Component {
         }
     }
 
+    handleKey(event){
+        if(event.keyCode===37){
+            if(this.state.stepNumber>0){
+                this.jumpTo(this.state.stepNumber-1);
+            }
+        } else if(event.keyCode===39){
+            if(this.state.stepNumber<this.state.history.length-1){
+                this.jumpTo(this.state.stepNumber+1);
+            }
+        }
+
+    }
+
     jumpTo(step) {
         this.setState({
             stepNumber: step,
@@ -163,10 +176,11 @@ class Game extends React.Component {
         const moves = history.map((step, move) => {
             const desc = move ?
                 'Move #' + move :
-                'Restart Level';
+                'Start';
+            const classStr = this.state.history.length>1&&move===this.state.stepNumber ? 'current-button' : null;
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <button className={classStr} onClick={() => this.jumpTo(move)}>{desc}</button>
                 </li>
             );
         });
@@ -178,7 +192,7 @@ class Game extends React.Component {
         const editText = this.state.level===-1 ? <div>Level Editor</div> : null;
 
         return (
-            <div className="game">
+            <div className="game" onKeyDown={(event)=>this.handleKey(event)}>
                 <div className="game-board">
                     <Board
                         squares={current.squares}
@@ -324,7 +338,7 @@ class LevelSelect extends React.Component {
         super(props);
         this.state = {
             level: 0,
-            elo: 500,
+            elo: 700,
             completed: Array(levels.numLevels()).fill(0),
             play: false,
             levelCode : levels.levelCode(0),
@@ -383,6 +397,8 @@ class LevelSelect extends React.Component {
             let classStr = this.state.completed[i] ? 'completed-button' : 'level-button';
             if (this.state.completed[i] === levels.bestTimes[i]) {
                 classStr = 'optimal-button';
+            } else if (this.state.completed[i]&&this.state.completed[i]<levels.bestTimes[i]){
+                classStr = 'super-optimal-button';
             }
             return (<button key={i} className={classStr} onClick={() => this.setLevel(i)}>{desc}</button>);
         });

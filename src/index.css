@@ -233,6 +233,10 @@ button {
     margin: 5px;
 }
 
+.current-button {
+    background-color: white;
+}
+
 .completed-button {
     background-color: yellow;
     margin: 5px;
@@ -240,6 +244,11 @@ button {
 
 .optimal-button {
     background-color: lime;
+    margin: 5px;
+}
+
+.super-optimal-button {
+    background-color: cyan;
     margin: 5px;
 }
 

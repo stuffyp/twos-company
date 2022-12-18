@@ -277,6 +277,46 @@ const levels = [
         ['orange-door', 'pink-door', 'orange-door', 'pink-door', 'orange-door', 'pink-door', 'orange-door', 'pink-door', 'orange-door', 'pink-door'],
     ],
     [
+        ['pink-door', 'green', 'wall', 'green', null],
+        ['orange-door',  'wall', 'wall', 'wall', 'pink-door'],
+        [null, null, 'red', null, null],
+        [null, 'wall', 'wall', 'wall', null],
+        ['orange-key', 'wall', 'wall', 'wall', 'pink-key'],
+        [null, 'wall', 'wall', 'wall', null],
+        [null, null, 'red', null, null],
+        ['orange-door', 'wall', 'wall', 'wall', 'pink-door'],
+        [null, 'blue', 'wall', 'blue', 'orange-door']
+    ],
+    [
+        [null, null, null, null, null, null, null, null, null, 'green'],
+        [null, 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', null, 'wall', 'wall', null],
+        [null, 'orange-door', 'orange-key', null, 'green', 'orange-door', null, 'pink-door', 'pink-door', null],
+        [null, 'orange-door', null, null, null, 'orange-door', null, 'wall', 'wall', null],
+        [null, 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', null, 'wall', 'wall', null],
+        [null, null, null, null, null, null, null, 'wall', 'wall', null],
+        ['wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', 'wall', 'wall', null],
+        ['blue', 'wall', 'wall', null, 'wall', 'wall', 'wall', 'red', null, null],
+        [null, null, null, 'orange-door', null, null, 'wall', null, 'wall', null],
+        [null, 'wall', 'wall', 'orange-door', 'wall', null, 'wall', null, 'wall', null],
+        ['wall', 'wall', 'orange-door', null, null, null, 'orange-door', null, 'wall', null],
+        ['wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', null, null, 'blue'],
+        ['wall', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
+        ['red', null, null, null, 'pink-key', 'wall', 'wall', 'wall', 'wall', 'wall']
+    ],
+    [
+        ['wall', 'wall', 'green', 'pink-door', null, 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', null, 'pink-door', null, null, null, 'wall', 'wall'],
+        ['wall', 'wall', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'wall', 'wall'],
+        ['orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door'],
+        ['pink-door', 'wall', null, null, 'orange-door', null, null, 'wall', 'orange-door'],
+        ['wall', 'wall', 'wall', 'wall', 'orange-key', 'wall', 'wall', 'wall', 'orange-door'],
+        ['pink-door', null, null, null, null, null, 'blue', 'wall', 'red'],
+        ['wall', null, null, 'pink-key', null, null, null, 'pink-door', 'orange-door'],
+        ['pink-door', 'green', null, null, null, null, 'blue', 'wall', 'red'],
+        ['wall', 'pink-door', 'wall', 'wall', 'wall', 'wall', 'pink-door', 'wall', 'pink-door']
+    ],
+    [
         ['red', null, null, 'pink-key', null, null, 'blue'],
         [null, 'wall', 'wall', 'wall', 'wall', 'wall', null],
         [null, 'wall', null, 'orange-key', null, 'wall', null],
@@ -300,6 +340,19 @@ const levels = [
         ['wall', 'green', 'pink-door', 'pink-door', 'blue', 'wall', 'wall', 'wall'],
     ],
     [
+        ['green', null, null, null, null, null, 'pink-key', null, null, 'blue'],
+        [null, 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', null],
+        [null, null, null, 'wall', 'wall', 'wall', 'wall', 'wall', null, null],
+        ['wall', 'wall', null, 'wall', 'wall', 'wall', 'wall', 'wall', null, 'wall'],
+        ['wall', 'wall', null, 'wall', 'wall', 'wall', 'wall', 'wall', null, 'wall'],
+        ['pink-door', 'pink-door', null, 'pink-door', 'pink-door', 'orange-door', 'neut', 'wall', null, 'wall'],
+        ['wall', 'wall', null, 'wall', 'wall', 'wall', 'wall', 'wall', null, 'wall'],
+        ['wall', 'wall', null, 'wall', 'wall', 'wall', 'wall', 'wall', null, 'wall'],
+        [null, null, null, 'wall', 'wall', 'wall', 'wall', 'wall', null, null],
+        [null, 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', null],
+        ['blue', null, null, null, null, null, 'orange-key', null, null, 'green']
+    ],
+    [
         ['orange-door', 'orange-door', 'orange-door', 'wall', 'wall', 'green', null, null, 'wall', 'wall'],
         [null, 'wall', 'orange-door', 'wall', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall'],
         ['blue', 'wall', 'orange-door', 'orange-door', 'wall', 'wall', 'pink-door', 'wall', null, 'wall'],
@@ -312,6 +365,84 @@ const levels = [
         ['wall', 'wall', 'wall', 'wall', null, null, null, null, null, 'wall'],
         ['wall', 'wall', 'wall', null, 'red', null, null, null, 'blue', null],
         ['wall', 'wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', null, 'wall']
+    ],
+    [
+        ['wall', 'wall', 'wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', 'wall'],
+        ['wall', null, 'wall', 'wall', null, null, null, 'blue', 'wall', 'wall'],
+        ['wall', 'orange-key', 'pink-door', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall', 'wall'],
+        ['wall', null, 'wall', 'wall', 'wall', null, 'wall', null, null, 'green'],
+        ['wall', null, 'wall', 'wall', 'wall', null, 'wall', 'wall', null, 'wall'],
+        [null, null, 'orange-door', 'pink-door', null, null, 'orange-door', 'orange-door', null, 'wall'],
+        ['blue', null, 'wall', 'wall', 'wall', null, 'wall', null, 'wall', 'wall'],
+        ['wall', null, 'wall', 'wall', 'wall', null, 'wall', null, 'wall', 'wall'],
+        ['wall', null, 'wall', 'green', 'orange-door', 'pink-door', null, null, 'pink-key', 'pink-door'],
+        ['wall', null, 'wall', 'wall', 'wall', 'wall', 'wall', null, 'wall', null],
+        ['wall', null, 'pink-door', 'wall', 'wall', 'wall', 'pink-door', null, 'wall', null],
+        ['red', null, null, null, null, null, null, 'red', 'wall', null],
+        ['wall', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall', null, null, null]
+    ],
+    [
+        ['wall', 'wall', 'wall', 'blue', null, null, 'green', 'wall', 'wall', 'wall'],
+        ['orange-door', 'wall', 'wall', null, 'wall', 'wall', null, 'wall', 'wall', 'wall'],
+        ['orange-door', 'wall', 'orange-key', null, null, 'wall', null, 'pink-door', 'red', 'wall'],
+        ['orange-door', 'wall', 'wall', null, 'wall', 'wall', null, 'pink-door', 'wall', 'wall'],
+        ['orange-door', null, null, null, null, null, null, 'pink-door', 'pink-door', 'pink-door'],
+        ['orange-door', 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall', 'wall', 'wall', 'wall'],
+        ['orange-door', 'wall', 'wall', 'pink-door', 'wall', null, null, 'pink-door', null, 'wall'],
+        ['orange-door', 'orange-door', 'wall', 'pink-door', null, 'pink-door', null, 'pink-key', null, 'pink-door'],
+        ['wall', 'orange-door', 'wall', null, 'wall', null, null, null, null, 'wall'],
+        ['wall', 'orange-door', 'wall', null, 'wall', 'wall', 'orange-door', 'pink-door', 'wall', 'wall'],
+        ['blue', null, 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', null, 'orange-door', 'orange-door'],
+        ['wall', null, 'wall', 'orange-door', 'orange-door', 'wall', 'wall', 'pink-door', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', 'orange-door', null, 'green', 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', 'orange-door', 'wall', null, 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'wall', 'orange-door', 'wall', 'red', 'wall', 'wall', 'wall', 'wall']
+    ],
+    [
+        ['blue', null, null, null, null, 'wall', 'wall', 'wall', 'wall', 'wall'],
+        [null, null, null, null, null, 'wall', 'wall', 'wall', 'wall', 'wall'],
+        [null, null, 'pink-key', null, null, 'wall', 'wall', 'wall', 'wall', 'wall'],
+        [null, null, null, null, null, 'wall', 'wall', 'red', 'wall', 'wall'],
+        [null, null, null, null, null, null, null, null, 'wall', 'wall'],
+        [null, null, null, null, null, 'wall', null, null, 'wall', 'wall'],
+        [null, null, 'orange-key', null, null, 'wall', 'wall', null, 'wall', 'wall'],
+        [null, null, null, null, null, 'wall', 'wall', null, 'wall', 'wall'],
+        ['blue', null, null, null, null, 'wall', null, 'orange-door', null, 'pink-door'],
+        ['wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', null, 'wall', null],
+        [null, null, null, 'orange-door', 'pink-door', null, null, 'orange-door', 'pink-door', 'pink-door'],
+        [null, 'wall', 'wall', 'orange-door', 'wall', 'wall', 'wall', null, 'wall', 'green'],
+        [null, 'wall', 'wall', 'pink-door', 'wall', 'wall', 'wall', null, 'wall', 'wall'],
+        [null, null, null, null, 'wall', 'wall', null, 'orange-door', 'red', 'wall'],
+        ['wall', 'wall', 'wall', 'orange-door', 'green', 'wall', 'wall', 'wall', 'wall', 'wall']
+    ],
+    [
+        ['wall', 'wall', 'wall', null, 'wall', 'orange-door', 'orange-door', 'orange-door', 'red'],
+        ['wall', 'wall', 'wall', 'pink-door', 'wall', 'orange-door', 'wall', 'wall', 'orange-door'],
+        ['wall', 'wall', 'wall', null, 'wall', 'green', 'wall', 'wall', 'orange-door', 'wall'],
+        [null, 'orange-door', null, 'neut', 'orange-door', 'pink-key', 'blue', 'orange-door', 'orange-door'],
+        ['wall', 'wall', 'wall', 'pink-door', 'wall', 'orange-door', 'wall', 'wall', 'wall'],
+        ['pink-door', 'pink-door', 'green', 'orange-key', 'pink-door', 'neut', null, 'pink-door', null],
+        ['pink-door', 'wall', 'wall', 'blue', 'wall', null, 'wall', 'wall', 'wall'],
+        ['pink-door', 'wall', 'wall', 'pink-door', 'wall', 'orange-door', 'wall', 'wall', 'wall'],
+        ['red', 'pink-door', 'pink-door', 'pink-door', 'wall', null, 'wall', 'wall', 'wall']
+    ],
+    [
+        ['wall', 'wall', 'orange-door', 'orange-door', 'orange-door', 'wall', 'pink-door', 'orange-door', 'orange-door', 'wall'],
+        ['wall', 'wall', 'orange-door', 'wall', 'orange-door', 'wall', 'pink-door', 'wall', null, 'wall'],
+        ['orange-door', 'orange-door', 'orange-door', null, 'orange-door', null, 'pink-door', null, null, 'wall'],
+        ['orange-door', 'wall', null, 'wall', 'orange-door', 'orange-door', 'orange-door', 'wall', null, 'wall'],
+        ['orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'wall', 'pink-door', null, null, 'wall'],
+        [null, 'wall', null, 'wall', 'orange-door', 'wall', 'pink-door', 'wall', 'wall', 'wall'],
+        ['orange-key', 'wall', 'pink-key', 'pink-door', 'pink-door', 'pink-door', 'green', 'wall', 'wall', 'wall'],
+        [null, 'wall', null, 'wall', 'orange-door', 'wall', 'wall', 'wall', 'wall', 'wall'],
+        ['blue', null, 'red', 'wall', 'orange-door', 'wall', 'wall', 'orange-door', 'wall', 'wall'],
+        ['wall', null, 'wall', 'wall', 'orange-door', 'pink-door', null, null, null, 'pink-door'],
+        ['pink-door', 'pink-door', 'pink-door', 'wall', 'orange-door', 'orange-door', 'wall', 'pink-door', 'wall', 'wall'],
+        ['pink-door', 'green', 'pink-door', 'pink-door', 'orange-door', 'wall', 'wall', null, 'wall', 'wall'],
+        ['pink-door', 'pink-door', 'pink-door', 'wall', 'orange-door', 'wall', 'red', null, null, 'wall'],
+        ['wall', 'wall', 'orange-door', 'wall', 'orange-door', 'wall', 'wall', 'orange-door', 'wall', 'wall'],
+        ['wall', 'blue', 'orange-door', 'orange-door', 'orange-door', 'wall', 'wall', 'pink-door', 'wall', 'wall']
     ],
 ]
 
@@ -341,7 +472,9 @@ export const bestTimes = [
     9, 9, 11, 19, 22,
     36, 21, 10, 29, 21,
     23, 15, 11, 41, 21,
-    34, 46, 43, 56,
+    34, 42, 27, 29, 46,
+    43, 83, 56, 74, 68,
+    71, 37, 81
 ]
 
 export const eloValues = [
@@ -350,31 +483,45 @@ export const eloValues = [
     1200, 1200, 1250, 1250, 1300,
     1400, 1350, 1400, 1500, 1500,
     1000, 1100, 1300, 1400, 1450,
-    1500, 1600, 1150, 1500, 1400,
-    1650, 1500, 1500, 1700, 1700,
-    1800, 1650, 1900, 1900,
+    1500, 1600, 1150, 1550, 1400,
+    1700, 1500, 1500, 1750, 1700,
+    1800, 1700, 1800, 1900, 1750,
+    2000, 1900, 1950, 2100, 2000,
+    2050, 1900, 2200
 ]
 
-//console.log(performance(bestTimes)); //max elo
+console.log(performance(bestTimes)); //max elo
 
 export function performance(completedVals){
     let total = 0;
 
-    let maxSolvedElo = 0;
+    let maxSolvedElo = 700;
+    let secondMaxSolvedElo = 700;
+    let thirdMaxSolvedElo = 700;
     for(let i = 0; i<completedVals.length; i++){
         if(completedVals[i]){
-            maxSolvedElo = Math.max(maxSolvedElo, eloValues[i]);
+            if(eloValues[i]>maxSolvedElo){
+                thirdMaxSolvedElo = secondMaxSolvedElo;
+                secondMaxSolvedElo = maxSolvedElo;
+                maxSolvedElo = eloValues[i];
+            } else if(eloValues[i]>secondMaxSolvedElo){
+                thirdMaxSolvedElo = secondMaxSolvedElo;
+                secondMaxSolvedElo = eloValues[i];
+            } else if(eloValues[i]>thirdMaxSolvedElo){
+                thirdMaxSolvedElo = eloValues[i];
+            }
         }
     }
 
-    let baseline = 400 + Math.floor(maxSolvedElo*0.15);
-    let weightSum = 0;
+    let baseline = Math.floor(maxSolvedElo/2+secondMaxSolvedElo/3+thirdMaxSolvedElo/6);
 
     for(let i = 0; i<completedVals.length; i++){
-        const weight = eloValues[i]/100;
-        weightSum += weight;
         if(completedVals[i]===0){
-            total += 0;
+            total += Math.min(eloValues[i]-250, baseline);
+            continue;
+        }
+        if(completedVals[i]===bestTimes[i]){
+            total += Math.max(eloValues[i]+250, baseline);
             continue;
         }
         let ratio = completedVals[i]/bestTimes[i];
@@ -383,10 +530,10 @@ export function performance(completedVals){
         } else if (ratio > 2){
             ratio = 2;
         }
-        const efficiency = (3-ratio)/2;
-        total += (eloValues[i]-baseline)*efficiency*weight;
+        const efficiency = 3-2*ratio;
+        total += eloValues[i]+250*efficiency;
     }
-    return baseline+Math.floor(total/weightSum);
+    return Math.floor(total/completedVals.length);
 }
 
 export function getLevel(i) {
@@ -572,6 +719,7 @@ export function loadCode(str){
         }
     }
     custom = temp;
+    console.log(custom);
 }
 
 //format: maps square type to letter, followed by number of repetitions
