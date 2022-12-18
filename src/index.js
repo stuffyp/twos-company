@@ -19,7 +19,7 @@ document.body.onmouseup = function() {
 
 function Square(props) {
     let subclass = props.value ? ' ' + props.value : '';
-    let highlight = props.orange ? (<div className="orange-doorframe"></div>) : null;
+    let highlight = props.orange && <div className="orange-doorframe"></div>;
     highlight = props.pink ? (<div className="pink-doorframe"></div>) : highlight;
     highlight = props.highlight ? (<div className="highlight"></div>) : highlight;
     return (
@@ -177,7 +177,7 @@ class Game extends React.Component {
             const desc = move ?
                 'Move #' + move :
                 'Start';
-            const classStr = this.state.history.length>1&&move===this.state.stepNumber ? 'current-button' : null;
+            const classStr = this.state.history.length>1 && move===this.state.stepNumber ? 'current-button' : undefined;
             return (
                 <li key={move}>
                     <button className={classStr} onClick={() => this.jumpTo(move)}>{desc}</button>
@@ -186,10 +186,10 @@ class Game extends React.Component {
         });
 
         let win = game.checkWin(current.squares);
-        let winText = win ? 'Level Complete!' : null;
+        let winText = win && 'Level Complete!';
 
-        const editButton = this.state.level===-1 ? <button onClick={() => this.props.edit()}>{'Edit'}</button> : null;
-        const editText = this.state.level===-1 ? <div>Level Editor</div> : null;
+        const editButton = this.state.level===-1 && <button onClick={() => this.props.edit()}>{'Edit'}</button>;
+        const editText = this.state.level===-1 && <div>Level Editor</div>;
 
         return (
             <div className="game" onKeyDown={(event)=>this.handleKey(event)}>
@@ -299,9 +299,9 @@ class Editor extends React.Component {
             pink={val==='pink-door'||val==='pink-key'}
             orange={val==='orange-door'||val==='orange-key'}
         />));
-        const validLevel = levels.customLevelValid() ? null : <div id='invalid-text'>Invalid Level</div>;
-        const playButton = levels.customLevelValid() ? 
-            <div id='editor-play'><button onClick={() => this.props.play()}>{'Play'}</button></div> : null;
+        const validLevel = levels.customLevelValid() || <div id='invalid-text'>Invalid Level</div>;
+        const playButton = levels.customLevelValid() && 
+            <div id='editor-play'><button onClick={() => this.props.play()}>{'Play'}</button></div>;
         const loadButton = <div id='editor-load'><button onClick={() => this.loadLevel()}>Load</button></div>;
         return (
             <div className="game">
@@ -335,11 +335,12 @@ class Editor extends React.Component {
 
 class LevelSelect extends React.Component {
     constructor(props) {
+        const storedCompleted = JSON.parse(localStorage['completed']);
         super(props);
         this.state = {
             level: 0,
-            elo: 700,
-            completed: Array(levels.numLevels()).fill(0),
+            //elo: 700,
+            completed: storedCompleted ? storedCompleted : Array(levels.numLevels()).fill(0),
             play: false,
             levelCode : levels.levelCode(0),
         };
@@ -384,11 +385,12 @@ class LevelSelect extends React.Component {
             return; //stops infinite refresh loop
         }
         temp[i] = moveNum;
-        const newElo = levels.performance(temp);
+        //const newElo = levels.performance(temp);
         this.setState({
             completed: temp,
-            elo: newElo,
+            //elo: newElo,
         });
+        localStorage['completed'] = JSON.stringify(temp);
     }
 
     render() {
@@ -404,17 +406,17 @@ class LevelSelect extends React.Component {
         });
         const gameVal = this.state.level===-1&&!this.state.play ? <Editor play={()=>this.playCustom()} updateLevelCode={()=>this.updateLevelCode()}/> : 
             <Game level={this.state.level} finishLevel={(i, moveNum) => this.finishLevel(i, moveNum)} edit={()=>this.editCustom()}/>;
-        const levelElo = this.state.level===-1 ? '???' : levels.eloValues[this.state.level];
+        //const levelElo = this.state.level===-1 ? '???' : levels.eloValues[this.state.level];
 
         return (<div>
             <div className="levels-container">
                 {buttons}
                 <button className='level-button' onClick={() => this.setLevel(-1)}>{'Level Editor'}</button>
             </div>
-            <div className='elo-container'>
+            {/*<div className='elo-container'>
                 <div>{'ELO: '+ this.state.elo}</div>
                 <div id='level-elo'>{'Level Difficulty: '+ levelElo}</div>
-            </div>
+            </div>*/}
             <div className="level-code-container">
                 <label htmlFor='level-code-text'>Level Code:</label>
                 <div id='level-code-text'>{this.state.levelCode}</div>

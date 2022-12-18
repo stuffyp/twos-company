@@ -477,7 +477,8 @@ export const bestTimes = [
     71, 37, 81
 ]
 
-export const eloValues = [
+//deprecated
+/*export const eloValues = [
     800, 800, 850, 900, 950,
     1000, 1000, 1050, 1100, 1100,
     1200, 1200, 1250, 1250, 1300,
@@ -490,7 +491,6 @@ export const eloValues = [
     2050, 1900, 2200
 ]
 
-console.log(performance(bestTimes)); //max elo
 
 export function performance(completedVals){
     let total = 0;
@@ -534,7 +534,7 @@ export function performance(completedVals){
         total += eloValues[i]+250*efficiency;
     }
     return Math.floor(total/completedVals.length);
-}
+}*/
 
 export function getLevel(i) {
     let l;
