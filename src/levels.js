@@ -444,6 +444,40 @@ const levels = [
         ['wall', 'wall', 'orange-door', 'wall', 'orange-door', 'wall', 'wall', 'orange-door', 'wall', 'wall'],
         ['wall', 'blue', 'orange-door', 'orange-door', 'orange-door', 'wall', 'wall', 'pink-door', 'wall', 'wall']
     ],
+    [
+        ['wall', 'wall', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'orange-door', null, null, 'orange-door', 'wall', 'wall', 'wall', 'wall'],
+        ['wall', 'wall', 'orange-door', null, null, 'orange-door', 'blue', 'neut', 'wall', 'wall'],
+        ['pink-door', 'wall', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'wall', 'wall', 'wall', 'wall'],
+        [null, 'wall', 'wall', 'wall', null, 'wall', 'wall', 'wall', 'wall', 'wall'],
+        [null, 'orange-door', 'green', null, 'orange-door', null, null, null, 'wall', 'wall'],
+        [null, 'wall', null, 'wall', 'orange-door', 'wall', 'wall', null, 'wall', 'wall'],
+        ['red', 'wall', null, 'wall', 'orange-door', 'wall', 'wall', null, 'wall', null],
+        [null, 'wall', null, 'orange-door', 'neut', null, null, 'orange-door', 'pink-door', 'pink-door'],
+        [null, 'wall', null, 'wall', 'orange-key', 'wall', 'wall', null, 'wall', 'blue'],
+        [null, 'wall', null, 'wall', 'orange-door', 'red', 'wall', 'pink-door', 'wall', 'wall'],
+        ['pink-door', 'wall', null, 'wall', null, 'wall', 'wall', null, 'wall', 'wall'],
+        [null, null, 'pink-key', null, 'wall', 'wall', 'wall', null, 'wall', 'wall'],
+        [null, 'wall', 'wall', null, 'pink-door', null, null, 'green', 'wall', 'wall'],
+        ['pink-door', null, null, null, 'wall', 'wall', 'wall', 'wall', 'wall', 'wall']
+    ],
+    [
+        ['wall', null, 'blue', null, 'wall', 'wall', null, 'pink-door', null, 'wall'],
+        ['wall', null, null, null, null, null, 'pink-door', 'pink-door', 'pink-door', null],
+        ['wall', 'wall', 'wall', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'pink-key', 'pink-door', 'pink-door'],
+        ['wall', null, 'wall', null, null, null, 'pink-door', null, 'pink-door', null],
+        ['orange-door', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'pink-door', 'red', 'pink-door', null],
+        ['wall', 'green', 'wall', null, null, null, 'pink-door', 'pink-door', 'pink-door', null],
+        ['wall', 'wall', 'wall', 'neut', null, null, null, 'pink-door', null, 'wall'],
+        ['wall', 'wall', 'wall', 'wall', null, null, 'wall', 'wall', 'wall', 'wall'],
+        ['wall', null, 'orange-door', null, null, null, 'neut', 'wall', 'wall', 'wall'],
+        [null, 'orange-door', 'orange-door', 'orange-door', null, null, null, 'wall', 'green', 'wall'],
+        [null, 'orange-door', 'blue', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'pink-door'],
+        [null, 'orange-door', null, 'orange-door', null, null, null, 'wall', null, 'wall'],
+        ['orange-door', 'orange-door', 'orange-key', 'orange-door', 'orange-door', 'orange-door', 'orange-door', 'wall', 'wall', 'wall'],
+        [null, 'orange-door', 'orange-door', 'orange-door', null, null, null, null, null, 'wall'],
+        ['wall', null, 'orange-door', null, 'wall', 'wall', null, 'red', null, 'wall']
+    ],
 ]
 
 let custom = [
@@ -474,7 +508,7 @@ export const bestTimes = [
     23, 15, 11, 41, 21,
     34, 42, 27, 29, 46,
     43, 83, 56, 74, 68,
-    71, 37, 81
+    71, 37, 81, 57, 77,
 ]
 
 //deprecated
@@ -535,6 +569,69 @@ export function performance(completedVals){
     }
     return Math.floor(total/completedVals.length);
 }*/
+
+const levelNames = [
+    "Two's Company",
+    "First Steps",
+    "Roundabout",
+    "Seeing Double",
+    "Traffic Jam",
+    "Figure Eight",
+    "A Helping Hand",
+    "Three's a Crowd",
+    "On the Stack (Part I)",
+    "Suspicious Behavior",
+    "Racetrack",
+    "On the Stack (Part II)",
+    "The Bridge",
+    "Wishing Well",
+    "Salmon Ladder",
+    "Through the Looking-Glass",
+    "Jailbreak",
+    "Limiting Reactant",
+    "Christmas Tree",
+    "Bit Shift",
+    "Door and Switch (Part I)",
+    "Castle Gates",
+    "Turbulence",
+    "The Crane",
+    "Nucleus",
+    "Icebreaker",
+    "Leapfrog",
+    "Door and Switch (Part II)",
+    "Puppet on a String",
+    "Cocktail Shaker",
+    "Down the Rabbit Hole",
+    "Vending Machine",
+    "Pocket Mirror",
+    "Rhythm Game",
+    "Rorschach Test",
+    "Levitation",
+    "Particle Accelerator",
+    "Soap Bubble",
+    "Polar Express",
+    "Jellyfish",
+    "Claustrophobia",
+    "Modular Arithmetic",
+    "Forbidden Fruit",
+    "Smokestacks",
+    "Ant Colony",
+    "Table Tennis",
+    "Butterfly",
+    "Valentine's Day",
+    "The Snowman",
+    "Two's Company (Requiem)",
+];
+
+
+
+
+
+
+
+export function levelName(i){
+    return levelNames[i];
+}
 
 export function getLevel(i) {
     let l;
@@ -719,7 +816,6 @@ export function loadCode(str){
         }
     }
     custom = temp;
-    console.log(custom);
 }
 
 //format: maps square type to letter, followed by number of repetitions

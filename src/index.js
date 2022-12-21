@@ -146,11 +146,11 @@ class Game extends React.Component {
     }
 
     handleKey(event){
-        if(event.keyCode===38){
+        if(event.key==='ArrowUp'){
             if(this.state.stepNumber>0){
                 this.jumpTo(this.state.stepNumber-1);
             }
-        } else if(event.keyCode===40){
+        } else if(event.key==='ArrowDown'){
             if(this.state.stepNumber<this.state.history.length-1){
                 this.jumpTo(this.state.stepNumber+1);
             }
@@ -192,7 +192,7 @@ class Game extends React.Component {
         const editText = this.state.level===-1 && <div>Level Editor</div>;
 
         return (
-            <div className="game" onKeyDown={(event)=>this.handleKey(event)}>
+            <div className="game" onKeyDown={(e)=>this.handleKey(e)}>
                 <div className="game-board">
                     <Board
                         squares={current.squares}
@@ -415,7 +415,7 @@ class LevelSelect extends React.Component {
                 <button className='level-button' onClick={() => this.setLevel(-1)}>{'Level Editor'}</button>
             </div>
             <div className='elo-container'>
-                <div>{this.state.level+1 ? 'Level '+ (this.state.level+1) + ':' : 'Level: Custom'}</div>
+                <div>{this.state.level+1 ? 'Level '+ (this.state.level+1) + ': ' + levels.levelName(this.state.level) : 'Level: Custom'}</div>
             </div>
             {/*<div className='elo-container'>
                 <div>{'ELO: '+ this.state.elo}</div>
