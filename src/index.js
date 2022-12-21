@@ -146,11 +146,11 @@ class Game extends React.Component {
     }
 
     handleKey(event){
-        if(event.key==='ArrowUp'){
+        if(event.key==='ArrowLeft'){
             if(this.state.stepNumber>0){
                 this.jumpTo(this.state.stepNumber-1);
             }
-        } else if(event.key==='ArrowDown'){
+        } else if(event.key==='ArrowRight'){
             if(this.state.stepNumber<this.state.history.length-1){
                 this.jumpTo(this.state.stepNumber+1);
             }
