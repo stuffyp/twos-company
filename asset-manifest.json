@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/twos-company/static/css/main.c89fc1fb.css",
+    "main.js": "/twos-company/static/js/main.a7602d99.js",
+    "index.html": "/twos-company/index.html",
+    "main.c89fc1fb.css.map": "/twos-company/static/css/main.c89fc1fb.css.map",
+    "main.a7602d99.js.map": "/twos-company/static/js/main.a7602d99.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c89fc1fb.css",
+    "static/js/main.a7602d99.js"
+  ]
+}
