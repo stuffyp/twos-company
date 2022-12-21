@@ -227,6 +227,18 @@ ul {
     margin-left: auto;
 }
 
+#help-button {
+    margin-right: 5px;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: aliceblue;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
 .level-code-container {
     margin: 20px auto;
     background-color: aliceblue;
@@ -239,6 +251,56 @@ ul {
     background-color: aliceblue;
     border: none;
     overflow: visible;
+}
+
+.popup {
+    margin: 20px auto;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-wrap: break-word;
+    display: flex;
+    justify-content: center;
+}
+
+p {
+    text-align: center;
+}
+
+#p-green {
+    color: #4ce0b3;
+}
+
+#p-blue {
+    color: #4cc9f0;
+}
+
+#p-red {
+    color: #ff595e;
+}
+
+#p-gray{
+    color: #8d99ae;
+}
+
+#p-orange{
+    color: orange;
+}
+
+#p-pink{
+    color: hotpink;
+}
+
+#p-yell{
+    background-color: yellow;
+}
+
+#p-cgreen{
+    background-color: lime;
+}
+
+#p-cblue{
+    background-color: cyan;
 }
 
 button {

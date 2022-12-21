@@ -158,6 +158,15 @@ class Game extends React.Component {
         event.preventDefault();
     }
 
+    componentDidMount() {
+        document.addEventListener('keydown', (e)=>this.handleKey(e), false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', (e)=>this.handleKey(e), false);
+    }
+
+
     jumpTo(step) {
         this.setState({
             stepNumber: step,
@@ -192,7 +201,7 @@ class Game extends React.Component {
         const editText = this.state.level===-1 && <div>Level Editor</div>;
 
         return (
-            <div className="game" onKeyDown={(e)=>this.handleKey(e)}>
+            <div className="game">
                 <div className="game-board">
                     <Board
                         squares={current.squares}
@@ -344,6 +353,7 @@ class LevelSelect extends React.Component {
             completed: completed,
             play: false,
             levelCode : levels.levelCode(0),
+            showPopup: false,
         };
     }
 
@@ -394,6 +404,10 @@ class LevelSelect extends React.Component {
         localStorage['completed'] = JSON.stringify(temp);
     }
 
+    togglePopup(){
+        this.setState({showPopup: !this.state.showPopup});
+    }
+
     render() {
         const buttons = Array(levels.numLevels()).fill(0).map((x, i) => {
             const desc = 'Level ' + (i + 1);
@@ -409,6 +423,46 @@ class LevelSelect extends React.Component {
             <Game level={this.state.level} finishLevel={(i, moveNum) => this.finishLevel(i, moveNum)} edit={()=>this.editCustom()}/>;
         //const levelElo = this.state.level===-1 ? '???' : levels.eloValues[this.state.level];
 
+        let popup = null;
+        if(this.state.showPopup) {
+          popup = (<div className='popup'>
+            <p>Rules:<br/><br/>
+            The goal of the game is to get pairs of colored blocks (<span id='p-green'>GREEN</span>,
+             <span id='p-blue'>BLUE</span>, and <span id='p-red'>RED</span>)
+              next to each other. To move a block, click on it, and the squares it can 
+              move to will be highlighted. Blocks move in each of the four 
+              orthogonal directions (up, down, left right) as far as it can until it 
+              hits another block or a wall. <span id='p-gray'>
+            <br/><br/>
+            NEUTRAL</span> blocks do not 
+              need to be paired up and can be moved like colored blocks.
+              <br/><br/>
+            <span id='p-orange'>ORANGE</span> and <span id='p-pink'>PINK</span> are
+             sets of doors (solid interior) and switches (empty interior). Switches are the same 
+             color as their corresponding doors. Doors are intially closed (solid), 
+             and act like walls. Moving a block onto the switch will 
+             open the corresponding doors; open doors (empty) act like empty squares. Moving a block off 
+             the switch closes the corresponding doors; you cannot move a block off the switch if it 
+             would close a door onto another block.
+            <br/><br/>
+            Miscellaneous:<br/><br/>
+            Use the left and right arrow keys to undo and redo moves (only works in certain browsers).
+            <br/><br/>
+            When you complete a level, the corresponding button will turn a certain color. 
+            A <span id='p-yell'>YELLOW</span> button means that the level could be completed in fewer moves. 
+            A <span id='p-cgreen'>GREEN</span> button means that the level has been completed in what is believed 
+            to be an optimal number of moves. A <span id='p-cblue'>BLUE</span> button means that you have found 
+            a solution that is faster than the best known solution.
+            <br/><br/>
+            In the level editor, a level can only be played once it satisfies the following criteria: 
+            there is at least one type of colored block and no colored block lacks a pair, the level is not 
+            already solved, and there is exactly one switch for each door type (<span id='p-orange'>ORANGE</span> and <span id='p-pink'>PINK</span>).
+            <br/><br/>
+            Click the help button again to close this.
+            </p>
+          </div>);
+        }
+
         return (<div>
             <div className="levels-container">
                 {buttons}
@@ -416,7 +470,9 @@ class LevelSelect extends React.Component {
             </div>
             <div className='elo-container'>
                 <div>{this.state.level+1 ? 'Level '+ (this.state.level+1) + ': ' + levels.levelName(this.state.level) : 'Level: Custom'}</div>
+                <button id='help-button' onClick={()=>this.togglePopup()}>?</button>
             </div>
+            {popup}
             {/*<div className='elo-container'>
                 <div>{'ELO: '+ this.state.elo}</div>
                 <div id='level-elo'>{'Level Difficulty: '+ levelElo}</div>
