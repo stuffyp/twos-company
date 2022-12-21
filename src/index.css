@@ -4,6 +4,7 @@ body {
     max-width: 740px;
     background-color: var(--sky-color);
     --sky-color: #B7E2F3;
+    overflow-y: auto;
 }
 
 body > div {
@@ -13,10 +14,6 @@ body > div {
 .container {
     padding-left: 10px;
     padding-right: 10px;
-}
-
-#root {
-    will-change: transform;
 }
 
 @media only screen and (max-width: 740px){ 
@@ -335,7 +332,7 @@ button {
 }
 
 #bottom-padding {
-    height: 50px
+    height: 100px
 }
   
   
