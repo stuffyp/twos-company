@@ -428,16 +428,15 @@ class LevelSelect extends React.Component {
           popup = (<div className='popup'>
             <p>Rules:<br/><br/>
             The goal of the game is to get pairs of colored blocks (<span id='p-green'>GREEN</span>,
-             <span id='p-blue'>BLUE</span>, and <span id='p-red'>RED</span>)
+             <span id='p-blue'> BLUE</span>, and <span id='p-red'>RED</span>)
               next to each other. To move a block, click on it, and the squares it can 
-              move to will be highlighted. Blocks move in each of the four 
-              orthogonal directions (up, down, left right) as far as it can until it 
-              hits another block or a wall. <span id='p-gray'>
+              move to will be highlighted. Blocks move as far as they can in one of the four 
+              orthogonal directions (up, down, left, right) until they hit another block or a wall. <span id='p-gray'>
             <br/><br/>
             NEUTRAL</span> blocks do not 
               need to be paired up and can be moved like colored blocks.
               <br/><br/>
-            <span id='p-orange'>ORANGE</span> and <span id='p-pink'>PINK</span> are
+            <span id='p-orange'>ORANGE</span> and <span id='p-pink'>PINK</span> form
              sets of doors (solid interior) and switches (empty interior). Switches are the same 
              color as their corresponding doors. Doors are intially closed (solid), 
              and act like walls. Moving a block onto the switch will 
@@ -446,9 +445,9 @@ class LevelSelect extends React.Component {
              would close a door onto another block.
             <br/><br/>
             Miscellaneous:<br/><br/>
-            Use the left and right arrow keys to undo and redo moves (only works in certain browsers).
+            Use the left and right arrow keys to undo and redo moves.
             <br/><br/>
-            When you complete a level, the corresponding button will turn a certain color. 
+            When you complete a level, the corresponding button will change color. 
             A <span id='p-yell'>YELLOW</span> button means that the level could be completed in fewer moves. 
             A <span id='p-cgreen'>GREEN</span> button means that the level has been completed in what is believed 
             to be an optimal number of moves. A <span id='p-cblue'>BLUE</span> button means that you have found 
@@ -456,7 +455,7 @@ class LevelSelect extends React.Component {
             <br/><br/>
             In the level editor, a level can only be played once it satisfies the following criteria: 
             there is at least one type of colored block and no colored block lacks a pair, the level is not 
-            already solved, and there is exactly one switch for each door type (<span id='p-orange'>ORANGE</span> and <span id='p-pink'>PINK</span>).
+            already solved, and there is exactly one switch for each door type (<span id='p-orange'>ORANGE</span> and <span id='p-pink'>PINK</span>) present.
             <br/><br/>
             Click the help button again to close this.
             </p>
