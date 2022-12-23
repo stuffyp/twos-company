@@ -426,7 +426,7 @@ class LevelSelect extends React.Component {
         let popup = null;
         if(this.state.showPopup) {
           popup = (<div className='popup'>
-            <p>Rules:<br/><br/>
+            <p>--RULES--<br/><br/>
             The goal of the game is to get pairs of colored blocks (<span id='p-green'>GREEN</span>,
              <span id='p-blue'> BLUE</span>, and <span id='p-red'>RED</span>)
               next to each other. To move a block, click on it, and the squares it can 
@@ -444,7 +444,7 @@ class LevelSelect extends React.Component {
              the switch closes the corresponding doors; you cannot move a block off the switch if it 
              would close a door onto another block.
             <br/><br/>
-            Miscellaneous:<br/><br/>
+            --MISCELLANEOUS--<br/><br/>
             Use the left and right arrow keys to undo and redo moves.
             <br/><br/>
             When you complete a level, the corresponding button will change color. 
