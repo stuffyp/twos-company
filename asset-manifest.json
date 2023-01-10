@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/twos-company/static/css/main.427d841b.css",
-    "main.js": "/twos-company/static/js/main.15804d13.js",
+    "main.js": "/twos-company/static/js/main.7f6bdacb.js",
     "index.html": "/twos-company/index.html",
     "main.427d841b.css.map": "/twos-company/static/css/main.427d841b.css.map",
-    "main.15804d13.js.map": "/twos-company/static/js/main.15804d13.js.map"
+    "main.7f6bdacb.js.map": "/twos-company/static/js/main.7f6bdacb.js.map"
   },
   "entrypoints": [
     "static/css/main.427d841b.css",
-    "static/js/main.15804d13.js"
+    "static/js/main.7f6bdacb.js"
   ]
 }
